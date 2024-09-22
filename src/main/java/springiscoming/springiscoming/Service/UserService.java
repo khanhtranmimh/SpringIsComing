@@ -9,8 +9,11 @@ import java.util.List;
 
 @Service
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
@@ -18,5 +21,9 @@ public class UserService {
 
     public UserEntity createUser(UserEntity user) {
         return userRepository.save(user);
+    }
+
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
     }
 }

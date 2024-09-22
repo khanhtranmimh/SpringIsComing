@@ -1,6 +1,7 @@
 package springiscoming.springiscoming.CatalogController;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import springiscoming.springiscoming.CatalogEntity.UserEntity;
 import springiscoming.springiscoming.Dtos.UserRequestDto;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-public class UserController {
+class UserController {
     @Autowired
     private UserService userService;
 
@@ -28,5 +29,12 @@ public class UserController {
         userEntity.name = user.name;
 
         return userService.createUser(userEntity);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody()
+    public void delete(@PathVariable("id") Long id) {
+        userService.deleteUserById(id);
     }
 }
