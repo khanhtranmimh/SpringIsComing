@@ -53,3 +53,182 @@ To push your project into GitHub, You can do below tutorial. This tutorial is fo
 
 ### Step 7: Authorize
 - If requested, fill in your logging information on GitHub (username and password or your personal token if you enable 2-factor authentication).
+
+# Cấu trúc Project 
+Nếu bạn muốn xây dựng một dự án microservices với Spring Boot sử dụng Gradle, dưới đây là cấu trúc thư mục tương ứng và một số file cấu hình mẫu cho từng dịch vụ.
+
+### Cấu trúc thư mục dự án với Gradle
+
+```plaintext
+my-microservices-project/
+├── service-a/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/
+│   │   │   │   └── com/
+│   │   │   │       └── example/
+│   │   │   │           └── servicea/
+│   │   │   │               ├── ServiceAApplication.java
+│   │   │   │               ├── controller/
+│   │   │   │               ├── service/
+│   │   │   │               └── repository/
+│   │   │   └── resources/
+│   │   │       ├── application.yml
+│   │   │       └── static/
+│   │   └── test/
+│   ├── build.gradle
+│   └── settings.gradle
+├── service-b/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/
+│   │   │   │   └── com/
+│   │   │   │       └── example/
+│   │   │   │           └── serviceb/
+│   │   │   │               ├── ServiceBApplication.java
+│   │   │   │               ├── controller/
+│   │   │   │               ├── service/
+│   │   │   │               └── repository/
+│   │   │   └── resources/
+│   │   │       ├── application.yml
+│   │   │       └── static/
+│   │   └── test/
+│   ├── build.gradle
+│   └── settings.gradle
+└── common-library/
+    ├── src/
+    │   ├── main/
+    │   │   ├── java/
+    │   │   │   └── com/
+    │   │   │       └── example/
+    │   │   │           └── common/
+    │   │   │               └── utils/
+    │   │   └── resources/
+    │   └── test/
+    └── build.gradle
+```
+
+### Ví dụ file `build.gradle` cho từng dịch vụ
+
+#### 1. `service-a/build.gradle`
+
+```groovy
+plugins {
+    id 'org.springframework.boot' version '3.0.0'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'mysql:mysql-connector-java'
+    implementation 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+}
+```
+
+#### 2. `service-b/build.gradle`
+
+```groovy
+plugins {
+    id 'org.springframework.boot' version '3.0.0'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'postgresql:postgresql'
+    implementation 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+}
+```
+
+#### 3. `common-library/build.gradle`
+
+```groovy
+plugins {
+    id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.projectlombok:lombok'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+```
+
+### File `settings.gradle` cho từng dịch vụ
+
+Mỗi dịch vụ có thể có file `settings.gradle` đơn giản như sau:
+
+```groovy
+rootProject.name = 'service-a'  // Hoặc service-b
+```
+
+### Cách xây dựng và chạy ứng dụng
+
+1. **Chạy từng dịch vụ**: Bạn có thể di chuyển vào thư mục của từng dịch vụ và chạy lệnh Gradle để xây dựng và chạy ứng dụng:
+
+   ```bash
+   cd service-a
+   ./gradlew bootRun
+   ```
+
+   ```bash
+   cd service-b
+   ./gradlew bootRun
+   ```
+
+2. **Chạy các test case**: Để chạy các test case, bạn cũng có thể sử dụng lệnh:
+
+   ```bash
+   ./gradlew test
+   ```
+
+### Tóm lại
+
+Cấu trúc này cho phép bạn quản lý nhiều dịch vụ microservices một cách dễ dàng, mỗi dịch vụ có thể độc lập phát triển và triển khai. Bạn cũng có thể chia sẻ mã nguồn chung thông qua thư viện chung (`common-library`) để giảm thiểu mã lặp lại. Nếu bạn cần thêm thông tin hoặc có câu hỏi cụ thể hơn, hãy cho mình biết nhé!
