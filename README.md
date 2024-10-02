@@ -232,3 +232,10 @@ rootProject.name = 'service-a'  // Hoặc service-b
 ### Tóm lại
 
 Cấu trúc này cho phép bạn quản lý nhiều dịch vụ microservices một cách dễ dàng, mỗi dịch vụ có thể độc lập phát triển và triển khai. Bạn cũng có thể chia sẻ mã nguồn chung thông qua thư viện chung (`common-library`) để giảm thiểu mã lặp lại. Nếu bạn cần thêm thông tin hoặc có câu hỏi cụ thể hơn, hãy cho mình biết nhé!
+
+# Config Keycloak
+#### 1. Pull image from docker hub: `https://hub.docker.com/r/keycloak/keycloak`
+   ```bash
+   docker pull keycloak/keycloak
+   ```
+#### 2. Do it by follow tutorial: `https://www.keycloak.org/getting-started/getting-started-docker`
